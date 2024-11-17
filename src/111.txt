@@ -1,0 +1,168 @@
+import SwiftUI
+
+struct QuestionTypeView: View {
+    // 模拟数据源
+    let questions: [InterviewQuestion] = [
+        InterviewQuestion(companyLogo: "byte", companyName: "字节跳动", position: "后端开发", question: "Canal 监听 binlog 同步缓存，canal binlog 断流怎么办？", answer: "当 Canal 监听 binlog 同步缓存时，如果出现 canal binlog 断流的情况，可以通过以下方式解决：\n\n1,Canal 客户端断开连接:Canal 客户端连接 MySQL 时出现超时、网络不稳定或连接被 MySQL 主动断开。\n\n2,Canal Server 本身由于内存不足、线程阻塞或其他问题导致无法正常工作。\n\n3,MySQL 的 binlog 设置不正确，导致 Canal 无法读取到新的 binlog 数据。\n\n4,如果 Canal 解析 binlog 的速度较慢，可能导致数据积压，甚至触发 Canal Server 重启。"),
+               InterviewQuestion(companyLogo: "byte", companyName: "字节跳动", position: "前端开发", question: "如何优化前端性能？", answer: "当需要优化前端性能时，可以通过以下方式实现：\n\n1,减少请求：合并资源文件，使用 CDN 提升资源加载速度。\n\n2,代码分割：通过分块加载 JavaScript 实现按需加载，减少首屏加载时间。\n\n3,懒加载：对图片、视频等资源采用懒加载技术，提升页面渲染效率。\n\n4,优化 CSS 和 JavaScript：压缩代码，移除无用样式和脚本，减少浏览器渲染阻塞。\n\n5,浏览器缓存：利用 HTTP 缓存机制减少重复请求，提升访问速度。"),
+               InterviewQuestion(companyLogo: "byte", companyName: "字节跳动", position: "算法工程师", question: "如何提高算法的效率？", answer: "在提升算法效率时，可以通过以下方法实现：\n\n1,选择合适的数据结构：根据问题特点选择合适的栈、队列、树或图结构。\n\n2,优化算法复杂度：分析时间复杂度，尽量避免使用高复杂度的算法。\n\n3,利用并行计算：在多核环境下分割任务，提高计算速度。\n\n4,减少冗余计算：使用缓存或动态规划避免重复计算。"),
+               InterviewQuestion(companyLogo: "byte", companyName: "字节跳动", position: "产品经理", question: "如何优化产品开发流程？", answer: "在优化产品开发流程时，可以参考以下方法：\n\n1,明确需求：确保产品需求文档清晰完整，避免后期需求变更。\n\n2,敏捷开发：采用 Scrum 或 Kanban 方法提高团队协作效率。\n\n3,持续交付：利用自动化工具实现代码的快速部署和测试。\n\n4,用户反馈：通过用户测试和分析工具，实时收集数据进行优化。"),
+               InterviewQuestion(companyLogo: "meituan", companyName: "美团", position: "算法工程师", question: "如何实现一个高效的排序算法？", answer: "当需要实现高效的排序算法时，可以参考以下方法：\n\n1,快速排序：采用分治法，平均时间复杂度为 O(nlogn)。\n\n2,归并排序：基于递归思想，稳定性好，适用于大数据量排序。\n\n3,堆排序：使用堆数据结构完成排序，时间复杂度为 O(nlogn)。\n\n4,选择合适的算法：根据数据量、是否需要稳定性选择合适的排序算法。"),
+               InterviewQuestion(companyLogo: "meituan", companyName: "美团", position: "测试开发", question: "如何设计一个稳定的测试框架？", answer: "在设计稳定的测试框架时，可以通过以下步骤实现：\n\n1,模块化设计：将测试框架分为独立模块，提升可扩展性。\n\n2,自动化测试：采用脚本化方式实现回归测试和单元测试。\n\n3,持续集成：结合 CI/CD 工具自动触发测试流程，确保代码质量。\n\n4,日志和报告：完善日志记录和测试报告功能，方便定位问题。"),
+               InterviewQuestion(companyLogo: "meituan", companyName: "美团", position: "后端开发", question: "微服务架构的优缺点有哪些？", answer: "微服务架构的优缺点如下：\n\n1,优点：提高系统的可扩展性、独立部署性和团队开发效率。\n\n2,缺点：增加了系统的复杂度，如服务间通信、数据一致性和分布式事务的处理难度。\n\n3,适用场景：适用于大型复杂系统，功能模块清晰、分工明确的场景。"),
+               InterviewQuestion(companyLogo: "meituan", companyName: "美团", position: "前端开发", question: "前端如何与后端协作实现微服务？", answer: "在前端与后端协作实现微服务时，可以参考以下实践：\n\n1,明确 API 接口：前后端团队制定标准化的 API 文档，约定接口返回的数据格式。\n\n2,接口网关：通过网关统一管理后端微服务，前端只需访问网关即可获取所需数据。\n\n3,异步调用：前端通过批量请求或异步调用优化与后端的通信效率。\n\n4,数据整合：前端通过 GraphQL 或 BFF（Backend for Frontend）整合微服务返回的数据。"),
+               InterviewQuestion(companyLogo: "bilibili", companyName: "B站", position: "Java开发", question: "Java 中的垃圾回收机制是怎样的？", answer: "Java 中的垃圾回收机制主要包括以下内容：\n\n1,分代回收：将内存分为新生代、老年代和永久代，不同区域使用不同回收算法。\n\n2,GC 算法：包括标记清除、复制算法和标记整理算法。\n\n3,GC 类型：分为 Minor GC、Major GC 和 Full GC，不同类型影响系统性能。\n\n4,监控工具：使用 JVisualVM 或 JConsole 分析垃圾回收性能。"),
+               InterviewQuestion(companyLogo: "bilibili", companyName: "B站", position: "产品经理", question: "如何定义产品的 MVP？", answer: "在定义产品的 MVP（最小可行产品）时，可以通过以下方式：\n\n1,核心功能：包含用户最核心的需求，解决核心痛点。\n\n2,快速验证：在最短时间内构建可测试的版本，验证产品方向。\n\n3,反馈迭代：收集用户反馈，快速进行功能优化和版本迭代。\n\n4,资源控制：避免资源浪费，将开发成本控制在合理范围。"),
+               InterviewQuestion(companyLogo: "bilibili", companyName: "B站", position: "前端开发", question: "React 和 Vue 的区别是什么？", answer: "React 和 Vue 的主要区别如下：\n\n1,定位：React 是一个 UI 库，Vue 是一个渐进式框架。\n\n2,数据绑定：React 使用单向数据流，Vue 支持双向绑定。\n\n3,开发体验：Vue 提供更多内置功能，React 更加灵活但需要引入第三方库。\n\n4,适用场景：React 适合大型项目，Vue 更适合快速开发和中小型项目。"),
+        InterviewQuestion(companyLogo: "bilibili", companyName: "B站", position: "算法工程师", question: "React 和 Vue 的区别是什么？", answer: "React 和 Vue 的主要区别如下：\n\n1,定位：React 是一个 UI 库，Vue 是一个渐进式框架。\n\n2,数据绑定：React 使用单向数据流，Vue 支持双向绑定。\n\n3,开发体验：Vue 提供更多内置功能，React 更加灵活但需要引入第三方库。\n\n4,适用场景：React 适合大型项目，Vue 更适合快速开发和中小型项目。"),
+        InterviewQuestion(companyLogo: "bilibili", companyName: "B站", position: "产品经理", question: "React 和 Vue 的区别是什么？", answer: "React 和 Vue 的主要区别如下：\n\n1,定位：React 是一个 UI 库，Vue 是一个渐进式框架。\n\n2,数据绑定：React 使用单向数据流，Vue 支持双向绑定。\n\n3,开发体验：Vue 提供更多内置功能，React 更加灵活但需要引入第三方库。\n\n4,适用场景：React 适合大型项目，Vue 更适合快速开发和中小型项目。"),
+               InterviewQuestion(companyLogo: "bilibili", companyName: "B站", position: "后端开发", question: "如何优化后端服务性能？", answer: "在优化后端服务性能时，可以参考以下措施：\n\n1,数据库优化：使用索引、分库分表和缓存提升查询速度。\n\n2,异步处理：将耗时任务异步化，减少主线程的等待时间。\n\n3,负载均衡：通过 Nginx 或其他工具均衡流量，避免单点瓶颈。\n\n4,监控与调优：定期使用性能监控工具分析并优化代码。")
+    ]
+    
+    let columns = [
+        GridItem(.flexible(), spacing: 20),
+        GridItem(.flexible(), spacing: 20)
+    ]
+    
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(questions) { question in
+                    NavigationLink(destination: QuestionDetailView(question: question, questions: questions)) {
+                        QuestionCard(question: question)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+        }
+        .navigationTitle("面试岗位")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// 问题卡片视图
+struct QuestionCard: View {
+    let question: InterviewQuestion
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(question.companyLogo)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .padding(.trailing, 10)
+                Text(question.companyName)
+                    .font(.headline)
+                Spacer()
+            }
+            Text(question.position)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(Color(white: 0.95))
+        .cornerRadius(10)
+        .shadow(radius: 2)
+    }
+}
+
+// 问题详细视图
+struct QuestionDetailView: View {
+    let question: InterviewQuestion
+    let questions: [InterviewQuestion]
+    
+    @State private var currentIndex: Int
+
+    init(question: InterviewQuestion, questions: [InterviewQuestion]) {
+        self.question = question
+        self.questions = questions
+        self._currentIndex = State(initialValue: questions.firstIndex(where: { $0.id == question.id }) ?? 0)
+    }
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("问题：\(questions[currentIndex].question)")
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .background(Color(red: 181 / 255, green: 191 / 255, blue: 255 / 255))
+                .cornerRadius(10)
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("答案：\(questions[currentIndex].answer)")
+                            .font(.body)
+                            .foregroundColor(.white)
+                    }
+                    .padding(.top, 5)
+                }
+                .padding()
+                .background(Color(red: 181 / 255, green: 191 / 255, blue: 255 / 255))
+                .cornerRadius(10)
+                
+                HStack {
+                    Button(action: previousQuestion) {
+                        Text("上一题")
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .disabled(currentIndex == 0)
+
+                    Button(action: nextQuestion) {
+                        Text("下一题")
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(red: 181 / 255, green: 191 / 255, blue: 255 / 255))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .disabled(currentIndex == questions.count - 1)
+                }
+                .padding(.top, 10)
+            }
+            .padding()
+        }
+        .navigationTitle("岗位详情")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private func previousQuestion() {
+        if currentIndex > 0 {
+            currentIndex -= 1
+        }
+    }
+    
+    private func nextQuestion() {
+        if currentIndex < questions.count - 1 {
+            currentIndex += 1
+        }
+    }
+}
+
+// 数据模型
+struct InterviewQuestion: Identifiable {
+    let id = UUID()
+    let companyLogo: String
+    let companyName: String
+    let position: String
+    let question: String
+    let answer: String
+}
+
+// 预览
+struct QuestionTypeView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            QuestionTypeView()
+        }
+    }
+}
